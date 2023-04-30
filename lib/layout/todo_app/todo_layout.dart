@@ -5,7 +5,7 @@ import 'package:flutter_application_1/modulse/archive/archive.dart';
 import 'package:flutter_application_1/modulse/done/done.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../modulse/tasks/tasks.dart';
+import '../../modulse/tasks/tasks.dart';
 
 class home_layout extends StatefulWidget {
   const home_layout({super.key});
@@ -31,7 +31,7 @@ class _home_layoutState extends State<home_layout> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    creaDatabase();
+    creatDatabase();
   }
 
   @override
@@ -74,33 +74,52 @@ class _home_layoutState extends State<home_layout> {
     return 'ahmed ';
   }
 
-  void creaDatabase() async {
-    database = await openDatabase('todo.db');
-    version:
-    1;
+  void creatDatabase() async {
+    // WidgetsFlutterBinding.ensureInitialized();
 
-    onCreate:
+    database = await openDatabase('todo.db');
+    onCreat:
     (database, version) {
-      // id int
-      // title string
-      // date string
-      // time string
-      // status string
-      print('database created');
-      database
-          .execute(
-              'CREAT TABLE tasks (id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, status TEXT)')
-          .then((value) {
-        print('database created');
-      }).catchError((error) {
-        print('error when creating table${error.toString()}');
-      });
+      version:
+      1;
+      return database.excute(
+          'CREAT TABLE tasks (id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, status TEXT)');
     };
     onOpen:
     (database) {
-      print('database OPEN');
+      print("database crezted");
     };
+    print('the database is creat');
   }
+
+  // void creaDatabase() async {
+  // database = await openDatabase('todo.db');
+
+  //   version:
+  //   1;
+
+  //   onCreate:
+  //   (database, version) {
+  //     // id int
+  //     // title string
+  //     // date string
+  //     // time string
+  //     // status string
+  //     print('database created');
+  //     return database
+  //         .execute(
+  //             'CREAT TABLE tasks (id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, status TEXT)')
+  //         .then((value) {
+  //       print('database created');
+  //     }).catchError((error) {
+  //       print('error when creating table${error.toString()}');
+  //     });
+  //   };
+  //   onOpen:
+  //   (database) {
+  //     print('database OPEN');
+  //   };
+  // }
 
   // void insertToDatabase() {
   //   database.transaction((txn) async {
